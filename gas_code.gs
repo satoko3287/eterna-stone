@@ -10,6 +10,9 @@
 // 6. 発行されたURLを index.html の GAS_URL に貼り付ける
 // =====================================================
 
+// ★ 通知メールの送り先（自分のメールアドレスに変更してください）
+const NOTIFY_EMAIL = 'life.is.sweet.satoko@gmail.com';
+
 const HEADERS = [
   '受付日時',
   '旧姓お名前（ひらがな）',
@@ -58,8 +61,33 @@ function doPost(e) {
       data.payment  || '',
     ]);
 
-    // 列幅を自動調整（初回のみ重いので任意）
-    // sheet.autoResizeColumns(1, HEADERS.length);
+    // ── メール通知 ──────────────────────────────
+    const subject = '【Eterna Stone】新しいオーダーが届きました';
+    const body = `
+新しいオーダーが届きました！
+スプレッドシートをご確認ください。
+
+──────────────────────
+■ 受付日時：${new Date().toLocaleString('ja-JP')}
+■ お名前（ひらがな）：${data.kana || ''}
+■ 生年月日：${data.birthday || ''}
+■ メールアドレス：${data.email || ''}
+■ プラン：${data.plan || ''}
+■ サイズ：${data.size || ''}
+■ 目的：${data.purpose || ''}
+■ 石の方向性：${data.stone || '（記載なし）'}
+──────────────────────
+■ 送り先お名前：${data.shipName || ''}
+■ 郵便番号：${data.postal || ''}
+■ 住所：${data.address || ''}
+■ 電話番号：${data.phone || ''}
+■ お支払い方法：${data.payment || ''}
+──────────────────────
+
+Eterna Stone 自動通知
+`.trim();
+
+    GmailApp.sendEmail(NOTIFY_EMAIL, subject, body);
 
     return ContentService
       .createTextOutput(JSON.stringify({ status: 'success' }))
