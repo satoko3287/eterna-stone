@@ -379,6 +379,14 @@
       background: rgba(22,19,42,.7);
       position: relative;
     }
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 32px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
     .price-card::before {
       content: '✦ Eterna Stone ✦';
       position: absolute;
@@ -390,6 +398,7 @@
       letter-spacing: .2em;
       color: var(--gold);
     }
+    .price-card { max-width: none; }
 
     .price-label {
       font-size: .75rem;
@@ -440,6 +449,52 @@
       color: var(--gold-dark);
       font-size: .6rem;
       top: 10px;
+    }
+
+    /* ─── RADIO ──────────────────────────────── */
+    .radio-group {
+      display: flex; gap: 16px; flex-wrap: wrap;
+    }
+    .radio-label {
+      display: flex; align-items: center; gap: 10px;
+      cursor: pointer;
+      font-size: .88rem;
+      color: var(--text-muted);
+      padding: 12px 20px;
+      border: 1px solid var(--dark-border);
+      background: rgba(22,19,42,.8);
+      transition: border-color .3s, color .3s;
+      flex: 1; min-width: 140px;
+    }
+    .radio-label:has(input:checked) {
+      border-color: var(--gold-dark);
+      color: var(--gold-light);
+    }
+    .radio-label input[type="radio"] { display: none; }
+    .radio-dot {
+      width: 14px; height: 14px;
+      border: 1px solid var(--gold-dark);
+      border-radius: 50%;
+      flex-shrink: 0;
+      position: relative;
+      transition: border-color .3s;
+    }
+    .radio-label:has(input:checked) .radio-dot { border-color: var(--gold); }
+    .radio-label:has(input:checked) .radio-dot::after {
+      content: '';
+      position: absolute; inset: 3px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+
+    .form-section-title {
+      font-size: .72rem;
+      letter-spacing: .2em;
+      color: var(--gold-dark);
+      border-bottom: 1px solid var(--dark-border);
+      padding-bottom: 10px;
+      margin-bottom: 24px;
+      margin-top: 40px;
     }
 
     /* ─── FORM ────────────────────────────────── */
@@ -706,7 +761,7 @@
       <div class="feature-card fade-in">
         <span class="feature-icon">✨</span>
         <h3>丁寧な個別対応</h3>
-        <p>オーダー後はLINEにて1対1で対応。ご希望や気になることを丁寧にヒアリングし、最良の一点に仕上げます。</p>
+        <p>オーダー後はメールにて丁寧にご対応いたします。ご希望や気になることをヒアリングし、最良の一点に仕上げます。</p>
       </div>
     </div>
   </div>
@@ -732,8 +787,8 @@
       <div class="flow-step fade-in">
         <div class="flow-num">02</div>
         <div class="flow-content">
-          <h3>LINEにてご連絡</h3>
-          <p>24時間以内にLINEよりご連絡いたします。数秘リーディングの詳細やご要望を丁寧にヒアリングします。</p>
+          <h3>メールにてご連絡</h3>
+          <p>24時間以内にメールよりご連絡いたします。数秘リーディングの詳細やご要望を丁寧にヒアリングします。</p>
         </div>
       </div>
       <div class="flow-step fade-in">
@@ -770,28 +825,40 @@
       <span class="gold-line"></span>
     </div>
 
-    <div class="price-card fade-in">
-      <p class="price-label">ORDER BRACELET</p>
-      <p class="price-amount"><span>¥</span>10,000<span style="font-size:.65em; color:var(--text-muted); vertical-align:baseline; margin-left:4px;">〜</span></p>
-      <p class="price-note">（税込・送料込）</p>
+    <div class="price-grid">
 
-      <div class="price-divider"></div>
+      <div class="price-card fade-in">
+        <p class="price-label">BRACELET ONLY</p>
+        <p class="price-amount"><span>¥</span>10,000<span style="font-size:.65em; color:var(--text-muted); vertical-align:baseline; margin-left:4px;">〜</span></p>
+        <p class="price-note">ご希望の価格で承ります</p>
+        <div class="price-divider"></div>
+        <ul class="price-includes">
+          <li>オーダーメイドブレスレット制作</li>
+          <li>天然石の個別選定・ご提案</li>
+          <li>専用ボックスへのパッキング</li>
+          <li>送料（国内）</li>
+        </ul>
+      </div>
 
-      <ul class="price-includes">
-        <li>数秘リーディング（生年月日・名前より）</li>
-        <li>天然石の個別選定・ご提案</li>
-        <li>ハンドメイドブレスレット制作</li>
-        <li>専用ボックスへのパッキング</li>
-        <li>送料（国内）</li>
-        <li>LINEでの1対1サポート</li>
-      </ul>
+      <div class="price-card fade-in" style="border-color: var(--gold);">
+        <p class="price-label">BRACELET + 数秘鑑定書</p>
+        <p class="price-amount"><span>¥</span>15,000<span style="font-size:.65em; color:var(--text-muted); vertical-align:baseline; margin-left:4px;">〜</span></p>
+        <p class="price-note">ご希望の価格で承ります</p>
+        <div class="price-divider"></div>
+        <ul class="price-includes">
+          <li>オーダーメイドブレスレット制作</li>
+          <li>数秘鑑定書（書込み）</li>
+          <li>天然石の個別選定・ご提案</li>
+          <li>専用ボックスへのパッキング</li>
+          <li>送料（国内）</li>
+        </ul>
+      </div>
 
-      <div class="price-divider"></div>
-      <p style="font-size:.78rem; color:var(--text-muted); line-height:2;">
-        石の種類や組み合わせによって価格が変わります。<br>
-        詳細はLINEにてご案内いたします。
-      </p>
     </div>
+    <p style="text-align:center; font-size:.78rem; color:var(--text-muted); line-height:2; margin-top:32px;">
+      石の種類や組み合わせによって価格が変わります。<br>
+      詳細はメールにてご案内いたします。
+    </p>
   </div>
 </section>
 
@@ -807,35 +874,42 @@
     <div class="order-form fade-in">
       <form id="orderForm" novalidate>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="name">お名前<span class="required">必須</span></label>
-            <input type="text" id="name" name="name" placeholder="山田 花子" required>
-          </div>
-          <div class="form-group">
-            <label for="kana">フリガナ<span class="required">必須</span></label>
-            <input type="text" id="kana" name="kana" placeholder="ヤマダ ハナコ" required>
-          </div>
+        <!-- ── ご本人情報 ── -->
+        <p class="form-section-title">── ご本人情報</p>
+
+        <div class="form-group">
+          <label for="kana">旧姓のお名前（ひらがな）<span class="required">必須</span></label>
+          <input type="text" id="kana" name="kana" placeholder="やまだ はなこ" required>
         </div>
 
         <div class="form-group">
-          <label for="birthday">生年月日<span class="required">必須</span></label>
+          <label for="birthday">生年月日（西暦）<span class="required">必須</span></label>
           <input type="date" id="birthday" name="birthday" required>
         </div>
 
         <div class="form-group">
-          <label for="line">LINE ID / お名前<span class="required">必須</span></label>
-          <input type="text" id="line" name="line" placeholder="LINE IDまたはLINEでの表示名" required>
+          <label for="email">メールアドレス<span class="required">必須</span></label>
+          <input type="email" id="email" name="email" placeholder="example@email.com" required>
+        </div>
+
+        <!-- ── オーダー内容 ── -->
+        <p class="form-section-title">── オーダー内容</p>
+
+        <div class="form-group">
+          <label for="size">ご希望のサイズ（内径目安）<span class="required">必須</span></label>
+          <select id="size" name="size" required>
+            <option value="" disabled selected>お選びください</option>
+            <option>内径約 15cm</option>
+            <option>内径約 16cm</option>
+            <option>内径約 17cm</option>
+            <option>内径約 18cm</option>
+            <option>それ以上は要相談</option>
+          </select>
         </div>
 
         <div class="form-group">
-          <label for="email">メールアドレス</label>
-          <input type="email" id="email" name="email" placeholder="example@email.com">
-        </div>
-
-        <div class="form-group">
-          <label for="purpose">ブレスレットの目的</label>
-          <select id="purpose" name="purpose">
+          <label for="purpose">ブレスレットの目的<span class="required">必須</span></label>
+          <select id="purpose" name="purpose" required>
             <option value="" disabled selected>お選びください</option>
             <option>日常のお守り・エネルギー調整として</option>
             <option>新しいスタートへのサポートとして</option>
@@ -845,12 +919,55 @@
         </div>
 
         <div class="form-group">
-          <label for="message">気になること・ご要望（任意）</label>
-          <textarea id="message" name="message" placeholder="叶えたい願いや、現在お悩みのこと、好みのカラーなど、お気軽にお書きください。"></textarea>
+          <label for="stone">石の方向性でご希望があれば（任意）</label>
+          <textarea id="stone" name="stone" placeholder="例：落ち着いた色合いが好き、愛情運を高めたい、など。お気軽にお書きください。"></textarea>
+        </div>
+
+        <!-- ── お届け先 ── -->
+        <p class="form-section-title">── お届け先</p>
+
+        <div class="form-group">
+          <label for="shipName">送り先のお名前<span class="required">必須</span></label>
+          <input type="text" id="shipName" name="shipName" placeholder="山田 花子" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="postal">郵便番号<span class="required">必須</span></label>
+            <input type="text" id="postal" name="postal" placeholder="000-0000" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">電話番号<span class="required">必須</span></label>
+            <input type="tel" id="phone" name="phone" placeholder="090-0000-0000" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="address">住所<span class="required">必須</span></label>
+          <input type="text" id="address" name="address" placeholder="都道府県・市区町村・番地・建物名" required>
+        </div>
+
+        <!-- ── お支払い方法 ── -->
+        <p class="form-section-title">── お支払い方法</p>
+
+        <div class="form-group">
+          <label>お支払い方法<span class="required">必須</span></label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="payment" value="銀行振込" required>
+              <span class="radio-dot"></span>
+              銀行振込
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="payment" value="PayPay">
+              <span class="radio-dot"></span>
+              PayPay
+            </label>
+          </div>
         </div>
 
         <p class="form-note">
-          送信後、LINEにて24時間以内にご連絡いたします。<br>
+          送信後、メールにて24時間以内にご連絡いたします。<br>
           お問い合わせ・ご不明点もお気軽にどうぞ。
         </p>
 
@@ -863,7 +980,7 @@
         <h3>お申し込みありがとうございます</h3>
         <p>
           フォームのご送信を受け付けました。<br>
-          24時間以内にLINEよりご連絡いたします。<br><br>
+          24時間以内にメールよりご連絡いたします。<br><br>
           あなただけの特別なストーンが<br>
           新しい扉を開く力になりますように。
         </p>
@@ -902,27 +1019,63 @@
   });
 
   // ── Form submit ──
-  document.getElementById('orderForm').addEventListener('submit', function(e) {
+  const GAS_URL = 'YOUR_APPS_SCRIPT_URL'; // ← デプロイ後にURLを貼り付けてください
+
+  document.getElementById('orderForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    const required = this.querySelectorAll('[required]');
+    // バリデーション
+    const requiredFields = this.querySelectorAll('[required]');
     let valid = true;
-    required.forEach(field => {
-      if (!field.value.trim()) {
+    requiredFields.forEach(field => {
+      const isEmpty = field.type === 'radio'
+        ? !this.querySelector(`[name="${field.name}"]:checked`)
+        : !field.value.trim();
+      if (isEmpty) {
         valid = false;
-        field.style.borderColor = '#c97a7a';
-        field.addEventListener('input', () => field.style.borderColor = '', { once: true });
+        if (field.type !== 'radio') {
+          field.style.borderColor = '#c97a7a';
+          field.addEventListener('input', () => field.style.borderColor = '', { once: true });
+        }
       }
     });
+    if (!valid) return;
 
-    if (!valid) {
-      const first = this.querySelector('[required]:placeholder-shown, [required][value=""]');
-      return;
+    const btn = this.querySelector('.btn-submit');
+    btn.textContent = '送信中...';
+    btn.disabled = true;
+
+    const data = {
+      kana:     document.getElementById('kana').value,
+      birthday: document.getElementById('birthday').value,
+      email:    document.getElementById('email').value,
+      size:     document.getElementById('size').value,
+      purpose:  document.getElementById('purpose').value,
+      stone:    document.getElementById('stone').value,
+      shipName: document.getElementById('shipName').value,
+      postal:   document.getElementById('postal').value,
+      phone:    document.getElementById('phone').value,
+      address:  document.getElementById('address').value,
+      payment:  (document.querySelector('[name="payment"]:checked') || {}).value || '',
+    };
+
+    try {
+      if (GAS_URL !== 'YOUR_APPS_SCRIPT_URL') {
+        await fetch(GAS_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+      }
+      this.style.display = 'none';
+      document.getElementById('thanks').style.display = 'block';
+      document.getElementById('order').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch (err) {
+      btn.textContent = 'オーダーを申し込む';
+      btn.disabled = false;
+      alert('送信に失敗しました。しばらくしてからもう一度お試しください。');
     }
-
-    this.style.display = 'none';
-    document.getElementById('thanks').style.display = 'block';
-    document.getElementById('order').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 </script>
 
