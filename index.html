@@ -544,6 +544,23 @@
       margin-left: 4px;
       font-size: .65rem;
     }
+    .field-error {
+      display: none;
+      font-size: .75rem;
+      color: #e08080;
+      margin-top: 7px;
+      padding-left: 4px;
+      letter-spacing: .05em;
+    }
+    .field-error::before { content: '⚠ '; }
+    .form-group.has-error input,
+    .form-group.has-error select,
+    .form-group.has-error textarea {
+      border-color: #c97a7a;
+      box-shadow: 0 0 12px rgba(200,100,100,.15);
+    }
+    .form-group.has-error .radio-label { border-color: #c97a7a; }
+    .form-group.has-error .field-error { display: block; }
 
     .form-group input,
     .form-group select,
@@ -920,16 +937,19 @@
         <div class="form-group">
           <label for="kana">旧姓のお名前（ひらがな）<span class="required">必須</span></label>
           <input type="text" id="kana" name="kana" placeholder="やまだ はなこ" required>
+          <p class="field-error">お名前（ひらがな）を入力してください</p>
         </div>
 
         <div class="form-group">
           <label for="birthday">生年月日（西暦）<span class="required">必須</span></label>
           <input type="date" id="birthday" name="birthday" required>
+          <p class="field-error">生年月日を選択してください</p>
         </div>
 
         <div class="form-group">
           <label for="email">メールアドレス<span class="required">必須</span></label>
           <input type="email" id="email" name="email" placeholder="example@email.com" required>
+          <p class="field-error">メールアドレスを正しく入力してください</p>
         </div>
 
         <!-- ── オーダー内容 ── -->
@@ -943,6 +963,7 @@
             <option>竹 / おすすめ ¥17,800〜（ブレスレット＋数秘鑑定書）</option>
             <option>松 / プレミアム ¥24,800〜（ブレスレット＋鑑定書＋ギフトBOX）</option>
           </select>
+          <p class="field-error">ご希望のプランを選択してください</p>
         </div>
 
         <div class="form-group">
@@ -955,6 +976,7 @@
             <option>内径約 18cm（男性標準サイズ）</option>
             <option>それ以上は要相談</option>
           </select>
+          <p class="field-error">ご希望のサイズを選択してください</p>
         </div>
 
         <div class="form-group">
@@ -966,6 +988,7 @@
             <option>大切な方へのギフトとして</option>
             <option>その他</option>
           </select>
+          <p class="field-error">ブレスレットの目的を選択してください</p>
         </div>
 
         <div class="form-group">
@@ -979,28 +1002,32 @@
         <div class="form-group">
           <label for="shipName">送り先のお名前<span class="required">必須</span></label>
           <input type="text" id="shipName" name="shipName" placeholder="山田 花子" required>
+          <p class="field-error">送り先のお名前を入力してください</p>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label for="postal">郵便番号<span class="required">必須</span></label>
             <input type="text" id="postal" name="postal" placeholder="000-0000" required>
+            <p class="field-error">郵便番号を入力してください</p>
           </div>
           <div class="form-group">
             <label for="phone">電話番号<span class="required">必須</span></label>
             <input type="tel" id="phone" name="phone" placeholder="090-0000-0000" required>
+            <p class="field-error">電話番号を入力してください</p>
           </div>
         </div>
 
         <div class="form-group">
           <label for="address">住所<span class="required">必須</span></label>
           <input type="text" id="address" name="address" placeholder="都道府県・市区町村・番地・建物名" required>
+          <p class="field-error">住所を入力してください</p>
         </div>
 
         <!-- ── お支払い方法 ── -->
         <p class="form-section-title">── お支払い方法</p>
 
-        <div class="form-group">
+        <div class="form-group" id="paymentGroup">
           <label>お支払い方法<span class="required">必須</span></label>
           <div class="radio-group">
             <label class="radio-label">
@@ -1014,6 +1041,7 @@
               PayPay
             </label>
           </div>
+          <p class="field-error">お支払い方法を選択してください</p>
         </div>
 
         <p class="form-note">
@@ -1074,22 +1102,41 @@
   document.getElementById('orderForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    // バリデーション
+    // バリデーション：エラー表示をリセット
+    this.querySelectorAll('.form-group').forEach(g => g.classList.remove('has-error'));
+
     const requiredFields = this.querySelectorAll('[required]');
     let valid = true;
+    const checkedRadios = new Set();
+
     requiredFields.forEach(field => {
-      const isEmpty = field.type === 'radio'
-        ? !this.querySelector(`[name="${field.name}"]:checked`)
-        : !field.value.trim();
-      if (isEmpty) {
-        valid = false;
-        if (field.type !== 'radio') {
-          field.style.borderColor = '#c97a7a';
-          field.addEventListener('input', () => field.style.borderColor = '', { once: true });
+      if (field.type === 'radio') {
+        if (checkedRadios.has(field.name)) return;
+        checkedRadios.add(field.name);
+        const isChecked = !!this.querySelector(`[name="${field.name}"]:checked`);
+        if (!isChecked) {
+          valid = false;
+          field.closest('.form-group').classList.add('has-error');
+        }
+      } else {
+        const isEmpty = field.type === 'email'
+          ? !field.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)
+          : !field.value.trim();
+        if (isEmpty) {
+          valid = false;
+          field.closest('.form-group').classList.add('has-error');
+          field.addEventListener('input', () => field.closest('.form-group').classList.remove('has-error'), { once: true });
+          field.addEventListener('change', () => field.closest('.form-group').classList.remove('has-error'), { once: true });
         }
       }
     });
-    if (!valid) return;
+
+    if (!valid) {
+      // 最初のエラー項目にスクロール
+      const firstError = this.querySelector('.has-error');
+      if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
 
     const btn = this.querySelector('.btn-submit');
     btn.textContent = '送信中...';
