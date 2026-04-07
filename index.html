@@ -361,6 +361,39 @@
       line-height: 2;
     }
 
+    /* ─── GALLERY ────────────────────────────── */
+    #gallery {
+      padding: 100px 24px;
+      background: linear-gradient(180deg, transparent, rgba(22,19,42,.4), transparent);
+    }
+    .gallery-header { text-align: center; margin-bottom: 56px; }
+    .gallery-header .section-label { margin-bottom: 16px; }
+    .gallery-header .gold-line { margin-top: 24px; }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .gallery-item {
+      overflow: hidden;
+      border: 1px solid var(--dark-border);
+      position: relative;
+      aspect-ratio: 1 / 1;
+      transition: border-color .3s;
+    }
+    .gallery-item:hover { border-color: var(--gold-dark); }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .5s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.04); }
+
     /* ─── PRICE ───────────────────────────────── */
     #price {
       padding: 100px 24px;
@@ -846,6 +879,28 @@
           <h3>お届け</h3>
           <p>専用ボックスに入れて丁寧にお届けします。あなただけの運命のパートナーが手元に届きます。</p>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── GALLERY ─── -->
+<section id="gallery">
+  <div class="container">
+    <div class="gallery-header fade-in">
+      <p class="section-label">Gallery</p>
+      <h2 class="section-title">作品ギャラリー</h2>
+      <span class="gold-line"></span>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item fade-in">
+        <img src="images/20260407102405.JPEG" alt="Eterna Stone ブレスレット作品">
+      </div>
+      <div class="gallery-item fade-in">
+        <img src="images/20260407102528.JPEG" alt="Eterna Stone ブレスレット作品">
+      </div>
+      <div class="gallery-item fade-in">
+        <img src="images/20260407102640.JPEG" alt="Eterna Stone ブレスレット作品">
       </div>
     </div>
   </div>
