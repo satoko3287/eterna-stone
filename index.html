@@ -420,6 +420,87 @@
       margin: 0 auto;
     }
 
+    /* Exclusive カード */
+    .price-card-exclusive {
+      grid-column: 1 / -1;
+      max-width: 900px;
+      margin: 32px auto 0;
+      border: 1px solid var(--gold);
+      padding: 48px 48px;
+      background: linear-gradient(135deg, rgba(30,22,55,.95), rgba(20,15,40,.95));
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 32px;
+    }
+    .price-card-exclusive::before {
+      content: '✦ SUPER SPECIAL ✦';
+      position: absolute;
+      top: -10px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+      padding: 3px 20px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: .72rem;
+      letter-spacing: .25em;
+      color: var(--dark);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .exclusive-left h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 300;
+      letter-spacing: .2em;
+      color: var(--gold-light);
+      margin-bottom: 6px;
+    }
+    .exclusive-left .exclusive-sub {
+      font-size: .78rem;
+      letter-spacing: .12em;
+      color: var(--gold-dark);
+      margin-bottom: 20px;
+    }
+    .exclusive-left ul {
+      list-style: none;
+      display: flex; flex-wrap: wrap; gap: 8px 24px;
+    }
+    .exclusive-left ul li {
+      font-size: .82rem;
+      color: var(--text-muted);
+      padding-left: 16px;
+      position: relative;
+    }
+    .exclusive-left ul li::before {
+      content: '✦';
+      position: absolute; left: 0;
+      color: var(--gold-dark);
+      font-size: .55rem;
+      top: 6px;
+    }
+    .exclusive-right {
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .exclusive-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--gold-light);
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .exclusive-price span { font-size: 1.1rem; color: var(--gold); }
+    .exclusive-consult {
+      font-size: .72rem;
+      color: var(--text-muted);
+      letter-spacing: .1em;
+      margin-top: 6px;
+    }
+    @media (max-width: 600px) {
+      .price-card-exclusive { grid-template-columns: 1fr; padding: 40px 24px; }
+      .exclusive-right { border-top: 1px solid var(--dark-border); padding-top: 24px; }
+    }
+
     .price-card::before {
       content: '✦ Eterna Stone ✦';
       position: absolute;
@@ -967,6 +1048,27 @@
       </div>
 
     </div>
+
+    <!-- Exclusive -->
+    <div class="price-card-exclusive fade-in">
+      <div class="exclusive-left">
+        <h3>Exclusive</h3>
+        <p class="exclusive-sub">経営者・起業家のための超スペシャルブレス</p>
+        <ul>
+          <li>希少・高品質な大玉・高級天然石を使用</li>
+          <li>数秘鑑定書（書込み）</li>
+          <li>石のメッセージカード</li>
+          <li>最上級ギフトBOX</li>
+          <li>完全オーダーメイド制作</li>
+          <li>送料（国内）</li>
+        </ul>
+      </div>
+      <div class="exclusive-right">
+        <p class="exclusive-price"><span>¥</span>100,000<span style="font-size:.6em; color:var(--text-muted); vertical-align:baseline; margin-left:4px;">〜</span></p>
+        <p class="exclusive-consult">希少な石のため完全応相談</p>
+      </div>
+    </div>
+
     <p style="text-align:center; font-size:.82rem; color:var(--gold-light); line-height:2.2; margin-top:40px; font-weight:400;">
       松竹梅で、石の種類やグレードが変わります。<br>
       <span style="color:var(--text-muted); font-size:.78rem;">ご自身のちょっと頑張れる金額にするのがおすすめです。</span>
@@ -1017,6 +1119,7 @@
             <option>梅 / スタンダード ¥12,800〜（ブレスレット制作のみ）</option>
             <option>竹 / おすすめ ¥17,800〜（ブレスレット＋数秘鑑定書）</option>
             <option>松 / プレミアム ¥24,800〜（ブレスレット＋鑑定書＋ギフトBOX）</option>
+            <option>Exclusive / 超スペシャル ¥100,000〜（希少石・完全応相談）</option>
           </select>
           <p class="field-error">ご希望のプランを選択してください</p>
         </div>
